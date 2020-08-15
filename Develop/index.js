@@ -1,9 +1,12 @@
+// Constructor/Inquirer/Fs/Util Variables
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
 
+// Markdown Information Variable
 const generateMarkdown = require("./utils/generateMarkdown");
 
+// Questions Variable/Array
 const questions = [
   {
     type: "input",
@@ -14,12 +17,6 @@ const questions = [
     type: "input",
     message: "Please describe the functionality of the project in full detail.",
     name: "description",
-  },
-  {
-    type: "input",
-    message:
-      "Please provide a Table of Contents here for your Project README file.",
-    name: "contents",
   },
   {
     type: "input",
@@ -45,55 +42,50 @@ const questions = [
   },
   {
     type: "input",
-    message: "Who did you collaborate with on this project?",
+    message: "Who did you collaborate with on this project? If yes enter name. If no, leave blank",
     name: "credits",
   },
   {
     type: "input",
-    message: "Have you tested your Project? Please run test.",
+    message: "Have you tested your Project? Please enter test information. If not, leave blank.",
     name: "test",
   },
   {
-    type: "checkbox",
-    message: "Do you have a merit badge?",
-    choices: ["Yes", "No"],
+    type: "input",
+    message: "Do you have a README badge? If Yes, please enter link information to your badge. If not, leave blank. ",
+    choices: ["Yes", "Not Available"],
     name: "badge",
   },
   {
     type: "input",
-    message: "Do you have any questions?",
+    message: "What is your Github username?",
     name: "questionsA",
   },
-
   {
-    //adds email to the "questions" section
+    
+  //Adds Email to the "Questions" Section
     type: "input",
-    message: "I can be reached at.",
+    message: "What is your email contact information?",
     name: "email",
   },
 ];
 
-// function writeToFile (README, data){}
 
-// function generateMarkdown(answers) {
-// }
-
-
+// Function GenerateMarkdown Answers Output {}
 function init() {
-  inquirer
-    .prompt(questions)
+  inquirer.prompt(questions)
     .then((userAnswers) => {
-      const readme = generateMarkdown(userAnswers);
-      fs.writeFile("README.md", readme, function (err) {
+    const readme = generateMarkdown(userAnswers);
+    fs.writeFile("README.md", readme, function (err) {
         if (err) {
-          return console.log(err);
+         return console.log(err);
         }
         console.log("Successfully wrote to README.md");
       });
-      console.log(userAnswers);
+        console.log(userAnswers);
     })
     .catch((err) => console.log(err));
-  //console.log(err);
-}
 
+}
+// Initialization Function
 init();
